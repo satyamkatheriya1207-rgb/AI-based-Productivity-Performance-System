@@ -24,6 +24,17 @@ st.title("AI-Based Productivity & Performance System")
 # ---------------- CSV FILE ----------------
 FILE_NAME = "tasks.csv"
 
+# ---------------- CATEGORY LIST (shared everywhere) ----------------
+CATEGORY_LIST = [
+    "Study",
+    "Work",
+    "Health",
+    "Fitness",
+    "Personal",
+    "Travel",
+    "Other"
+]
+
 if not os.path.exists(FILE_NAME):
     df_init = pd.DataFrame(columns=[
         "Task_Name",
@@ -68,7 +79,7 @@ task_name = st.sidebar.text_input("Task Name")
 
 category = st.sidebar.selectbox(
     "Category",
-    ["Study", "Work", "Health", "Personal", "other"]
+    CATEGORY_LIST
 )
 
 start_date = st.sidebar.date_input("Start Date", date.today())
@@ -211,6 +222,7 @@ if st.session_state.get("focus_mode", False):
     if st.button("❌ Exit Focus Mode"):
         st.session_state.focus_mode = False
         st.rerun()
+
 # ---------------- MANAGE SESSIONS ----------------
 st.header("⚙ Manage Scheduled Sessions")
 
@@ -277,23 +289,16 @@ if "edit_index" in st.session_state:
         value=edit_task["Task_Name"]
     )
 
-    category_list = [
-        "Study",
-        "Fitness",
-        "Work",
-        "Personal",
-        "Other"
-    ]
+    # Match old lowercase values like "other" to the shared list
+    current_category = str(edit_task["Category"]).strip().title()
 
-    current_category = edit_task["Category"]
-
-    if current_category not in category_list:
+    if current_category not in CATEGORY_LIST:
         current_category = "Other"
 
     new_category = st.selectbox(
         "Category",
-        category_list,
-        index=category_list.index(current_category)
+        CATEGORY_LIST,
+        index=CATEGORY_LIST.index(current_category)
     )
 
     # DATE
@@ -340,8 +345,6 @@ if "edit_index" in st.session_state:
         del st.session_state.edit_index
 
         st.rerun()
-# else:
-#     st.info("No sessions available.")
 
 # ---------------- REMINDERS ----------------
 show_reminders(df)
