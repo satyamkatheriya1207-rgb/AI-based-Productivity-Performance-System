@@ -68,7 +68,7 @@ task_name = st.sidebar.text_input("Task Name")
 
 category = st.sidebar.selectbox(
     "Category",
-    ["Study", "Work", "Health", "Personal", "other"]
+    ["Study", "Work", "Health", "Personal", "Travel","other"]
 )
 
 start_date = st.sidebar.date_input("Start Date", date.today())
