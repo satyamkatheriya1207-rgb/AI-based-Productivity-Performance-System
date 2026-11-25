@@ -68,7 +68,7 @@ task_name = st.sidebar.text_input("Task Name")
 
 category = st.sidebar.selectbox(
     "Category",
-    ["Study", "Work", "Health", "Personal", "other"]
+    ["Study", "Work", "Health", "Travel", "other"]
 )
 
 start_date = st.sidebar.date_input("Start Date", date.today())
@@ -281,7 +281,7 @@ if "edit_index" in st.session_state:
         "Study",
         "Fitness",
         "Work",
-        "Personal",
+        "Travel",
         "Other"
     ]
 
